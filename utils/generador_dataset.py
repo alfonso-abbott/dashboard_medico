@@ -66,4 +66,4 @@ ruta = 'data/consultas_medicas.csv'
 os.makedirs('data', exist_ok=True)
 df.to_csv(ruta, index=False, encoding='utf-8-sig')
 
-print(f'✅ Dataset generado exitosamente con {N} filas y guardado en {ruta}')
+print(f"✅ Dataset generado exitosamente con {N} filas y guardado en {ruta}")
