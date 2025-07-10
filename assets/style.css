@@ -1,40 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
 body {
-    background-color: #121212;
-    color: #f0f0f0;
-    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at top left, #0e0e0e, #1b1b1b);
+    color: #e0e0e0;
+    font-family: 'Orbitron', sans-serif;
 }
 
-/* Títulos con acento neón */
 h1, h2, h3 {
     color: #00ffe1;
+    text-shadow: 0 0 6px #00ffe1;
 }
 
-/* Tarjetas / KPIs */
-.card {
-    background-color: #1f1f1f;
+.kpi-card {
+    background-color: #1a1a1a;
+    border: 1px solid #00ffe1;
     border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 0 15px #00ffe1;
+    box-shadow: 0 0 12px #00ffe1;
 }
 
-/* Contenedores de filtros */
 .filter-box {
-    background-color: #202020;
+    background-color: rgba(20,20,20,0.8);
     padding: 15px;
     border-radius: 8px;
-    margin-bottom: 10px;
+    border: 1px solid #00ffe1;
 }
 
-/* Dropdowns y botones */
 .Select-control, .dash-dropdown {
     background-color: #1c1c1c !important;
-    color: white !important;
+    color: #fff !important;
     border: 1px solid #00ffe1 !important;
 }
 
-/* Hover sobre tarjetas */
 .card:hover {
-    transform: scale(1.01);
+    transform: scale(1.02);
     box-shadow: 0 0 20px #00ffe1;
     transition: all 0.3s ease-in-out;
 }
+

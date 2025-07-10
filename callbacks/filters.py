@@ -1,49 +1,85 @@
 from dash import Input, Output
+import plotly.express as px
 from utils.funciones import (
     cargar_datos,
     especialidades_top,
     modalidad_consultas
 )
-import plotly.express as px
+from maps.mapa_consultas import generar_mapa_consultas
 
-# Callback para actualizar el gráfico de especialidades según modalidad
+
 def register_callbacks(app):
     @app.callback(
+        Output("grafico-modalidad", "figure"),
         Output("grafico-especialidades", "figure"),
-        Input("dropdown-modalidad", "value")
+        Output("grafico-genero", "figure"),
+        Output("grafico-edad", "figure"),
+        Output("grafico-duracion", "figure"),
+        Output("mapa-consultas", "srcDoc"),
+        Input("dropdown-region", "value"),
+        Input("dropdown-modalidad", "value"),
+        Input("dropdown-especialidad", "value"),
+        Input("dropdown-genero", "value"),
+        Input("slider-edad", "value")
     )
-    def actualizar_especialidades_por_modalidad(modalidad):
+    def actualizar_vistas(region, modalidad, especialidad, genero, rango_edad):
         df = cargar_datos()
+        if region:
+            df = df[df["region"] == region]
         if modalidad:
             df = df[df["tipo_consulta"] == modalidad]
+        if especialidad:
+            df = df[df["especialidad"] == especialidad]
+        if genero:
+            df = df[df["genero_paciente"] == genero]
+        if rango_edad:
+            df = df[(df["edad_paciente"] >= rango_edad[0]) & (df["edad_paciente"] <= rango_edad[1])]
+
+        fig_modalidad = px.pie(
+            modalidad_consultas(df),
+            values=modalidad_consultas(df).values,
+            names=modalidad_consultas(df).index,
+            title="Distribución por modalidad"
+        )
 
         top_especialidades = especialidades_top(df)
-
-        fig = px.bar(
+        fig_especialidades = px.bar(
             top_especialidades,
             x=top_especialidades.index,
             y=top_especialidades.values,
             labels={"x": "Especialidad", "y": "Cantidad"},
-            title=f"Especialidades más consultadas ({modalidad})"
+            title="Especialidades más consultadas"
         )
-        return fig
 
-    # Callback para actualizar gráfico de modalidad
-    @app.callback(
-        Output("grafico-modalidad", "figure"),
-        Input("dropdown-region", "value")
-    )
-    def actualizar_modalidad_por_region(region):
-        df = cargar_datos()
-        if region:
-            df = df[df["region"] == region]
-
-        modalidades = modalidad_consultas(df)
-
-        fig = px.pie(
-            modalidades,
-            values=modalidades.values,
-            names=modalidades.index,
-            title=f"Distribución por modalidad en {region}"
+        genero_counts = df["genero_paciente"].value_counts()
+        fig_genero = px.pie(
+            genero_counts,
+            values=genero_counts.values,
+            names=genero_counts.index,
+            title="Distribución por género"
         )
-        return fig
+
+        fig_edad = px.histogram(
+            df,
+            x="edad_paciente",
+            nbins=20,
+            title="Distribución por edad"
+        )
+
+        fig_duracion = px.histogram(
+            df,
+            x="duracion_minutos",
+            nbins=20,
+            title="Duración de consultas"
+        )
+
+        mapa_html = generar_mapa_consultas(df)
+
+        return (
+            fig_modalidad,
+            fig_especialidades,
+            fig_genero,
+            fig_edad,
+            fig_duracion,
+            mapa_html,
+        )

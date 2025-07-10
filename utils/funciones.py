@@ -27,3 +27,23 @@ def duracion_promedio(df):
 # Total por modalidad (presencial vs online)
 def modalidad_consultas(df):
     return df['tipo_consulta'].value_counts()
+
+def listar_regiones(df):
+    return sorted(df['region'].unique())
+
+
+def listar_especialidades(df):
+    return sorted(df['especialidad'].unique())
+
+
+def listar_modalidades(df):
+    return sorted(df['tipo_consulta'].unique())
+
+
+def listar_generos(df):
+    return sorted(df['genero_paciente'].unique())
+
+
+def rango_edad(df):
+    return int(df['edad_paciente'].min()), int(df['edad_paciente'].max())
+
