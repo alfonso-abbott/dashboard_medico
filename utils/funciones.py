@@ -1,8 +1,12 @@
 import pandas as pd
+from pathlib import Path
 
 # Cargar datos desde CSV (se reutiliza en múltiples partes del dashboard)
 def cargar_datos():
-    return pd.read_csv("data/consultas_medicas.csv")
+    path = Path("data/dataset_limpio.csv")
+    if not path.exists():
+        path = Path("data/consultas_medicas.csv")
+    return pd.read_csv(path)
 
 # Total de consultas realizadas
 def total_consultas(df):

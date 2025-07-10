@@ -11,10 +11,13 @@ from utils.funciones import (
 )
 
 # 🔹 Importar función para generar el mapa
+from pathlib import Path
 from maps.mapa_consultas import generar_mapa_consultas
 
 # ✅ Aseguramos que el mapa se genere antes de insertarlo
-generar_mapa_consultas()
+mapa_file = Path("maps/mapa_output.html")
+if not mapa_file.exists():
+    generar_mapa_consultas()
 
 # 🔄 Cargar datos una sola vez
 df = cargar_datos()
@@ -63,7 +66,7 @@ layout_tarjetas = dbc.Row([
         dbc.CardHeader("Mapa de Consultas"),
         dbc.CardBody(html.Iframe(
             id='mapa-consultas',
-            srcDoc=open("maps/mapa_output.html", "r", encoding="utf-8").read(),
+            srcDoc=mapa_file.read_text(encoding="utf-8"),
             width="100%",
             height="600",
             style={"border": "none"}

@@ -7,7 +7,7 @@ from utils.funciones import (
 import plotly.express as px
 
 # Callback para actualizar el gráfico de especialidades según modalidad
-def registrar_callbacks(app):
+def register_callbacks(app):
     @app.callback(
         Output("grafico-especialidades", "figure"),
         Input("dropdown-modalidad", "value")
@@ -15,7 +15,7 @@ def registrar_callbacks(app):
     def actualizar_especialidades_por_modalidad(modalidad):
         df = cargar_datos()
         if modalidad:
-            df = df[df["modalidad"] == modalidad]
+            df = df[df["tipo_consulta"] == modalidad]
 
         top_especialidades = especialidades_top(df)
 

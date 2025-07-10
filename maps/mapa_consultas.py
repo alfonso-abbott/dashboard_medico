@@ -34,12 +34,12 @@ def generar_mapa_consultas():
 
     for _, fila in df_mapa.iterrows():
         popup_text = f"""
-        <b>Ciudad:</b> {fila['ciudad']}<br>
+        <b>Comuna:</b> {fila['comuna']}<br>
         <b>Región:</b> {fila['region']}<br>
         <b>Especialidad:</b> {fila['especialidad']}<br>
-        <b>Modalidad:</b> {fila['modalidad']}<br>
-        <b>Edad:</b> {fila['edad']} años<br>
-        <b>Género:</b> {fila['genero']}
+        <b>Modalidad:</b> {fila['tipo_consulta']}<br>
+        <b>Edad:</b> {fila['edad_paciente']} años<br>
+        <b>Género:</b> {fila['genero_paciente']}
         """
         folium.Marker(
             location=[fila["latitud"], fila["longitud"]],
