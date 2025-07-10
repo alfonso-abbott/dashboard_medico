@@ -1,7 +1,9 @@
 import dash
 from dash import html
 import dash_bootstrap_components as dbc
+import webbrowser
 
+from threading import Timer
 from components.cards import layout_tarjetas
 from callbacks.filters import register_callbacks
 
@@ -23,5 +25,12 @@ app.layout = dbc.Container(
 
 register_callbacks(app)
 
+
+
+
+def open_browser():
+    webbrowser.open_new("http://127.0.0.1:8050/")
+
 if __name__ == "__main__":
-    app.run_server(debug=True, port=8050)
+    Timer(1, open_browser).start()
+    app.run(debug=False)
