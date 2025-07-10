@@ -35,12 +35,20 @@ def register_callbacks(app):
         if rango_edad:
             df = df[(df["edad_paciente"] >= rango_edad[0]) & (df["edad_paciente"] <= rango_edad[1])]
 
+        dark_theme = dict(
+            template="plotly_dark",
+            paper_bgcolor="#1c1c1c",
+            plot_bgcolor="#1c1c1c",
+            font_color="#ffffff",
+        )
+
         fig_modalidad = px.pie(
             modalidad_consultas(df),
             values=modalidad_consultas(df).values,
             names=modalidad_consultas(df).index,
             title="Distribución por modalidad"
         )
+        fig_modalidad.update_layout(**dark_theme)
 
         top_especialidades = especialidades_top(df)
         fig_especialidades = px.bar(
@@ -50,6 +58,7 @@ def register_callbacks(app):
             labels={"x": "Especialidad", "y": "Cantidad"},
             title="Especialidades más consultadas"
         )
+        fig_especialidades.update_layout(**dark_theme)
 
         genero_counts = df["genero_paciente"].value_counts()
         fig_genero = px.pie(
@@ -58,6 +67,7 @@ def register_callbacks(app):
             names=genero_counts.index,
             title="Distribución por género"
         )
+        fig_genero.update_layout(**dark_theme)
 
         fig_edad = px.histogram(
             df,
@@ -65,6 +75,7 @@ def register_callbacks(app):
             nbins=20,
             title="Distribución por edad"
         )
+        fig_edad.update_layout(**dark_theme)
 
         fig_duracion = px.histogram(
             df,
@@ -72,6 +83,7 @@ def register_callbacks(app):
             nbins=20,
             title="Duración de consultas"
         )
+        fig_duracion.update_layout(**dark_theme)
 
         mapa_html = generar_mapa_consultas(df)
 
