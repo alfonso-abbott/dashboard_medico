@@ -50,11 +50,26 @@ def filter_controls():
 def graph_tabs():
     return dbc.Row([
         dcc.Tabs(id="tabs-graficos", value="tab-modalidad", children=[
-            dcc.Tab(label="Modalidad", children=[dcc.Graph(id="grafico-modalidad")]),
-            dcc.Tab(label="Especialidades", children=[dcc.Graph(id="grafico-especialidades")]),
-            dcc.Tab(label="Género", children=[dcc.Graph(id="grafico-genero")]),
-            dcc.Tab(label="Edad", children=[dcc.Graph(id="grafico-edad")]),
-            dcc.Tab(label="Duración", children=[dcc.Graph(id="grafico-duracion")]),
+            dcc.Tab(label="Modalidad", children=[
+                html.P("Distribución de consultas por modalidad", className="text-light"),
+                dcc.Graph(id="grafico-modalidad")
+            ]),
+            dcc.Tab(label="Especialidades", children=[
+                html.P("Especialidades más consultadas", className="text-light"),
+                dcc.Graph(id="grafico-especialidades")
+            ]),
+            dcc.Tab(label="Género", children=[
+                html.P("Distribución de pacientes por género", className="text-light"),
+                dcc.Graph(id="grafico-genero")
+            ]),
+            dcc.Tab(label="Edad", children=[
+                html.P("Distribución de pacientes por edad", className="text-light"),
+                dcc.Graph(id="grafico-edad")
+            ]),
+            dcc.Tab(label="Duración", children=[
+                html.P("Duración de las consultas", className="text-light"),
+                dcc.Graph(id="grafico-duracion")
+            ]),
         ])
     ], className="mb-4")
 
